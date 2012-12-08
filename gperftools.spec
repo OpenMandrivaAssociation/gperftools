@@ -1,7 +1,7 @@
-%define major           1
-%define oname           gperftools
-%define libname         %mklibname %{oname} %major
-%define develname       %mklibname %{oname} -d
+%define major		1
+%define oname		gperftools
+%define libname		%mklibname %{oname} %major
+%define develname	%mklibname %{oname} -d
 
 Name:		gperftools
 Version:	2.0
@@ -28,7 +28,7 @@ a heap profiler, and a cpu-profiler.
 %package -n	%{develname}
 Summary:	Development libraries and headers for gperftools
 Group:		Development/C
-Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	google-perftools-devel = %{version}-%{release}
 Obsoletes:	google-perftools-devel < 2.0
 
@@ -38,7 +38,7 @@ Libraries and headers for developing applications that use gperftools.
 %package -n	%{libname}
 Group:		System/Libraries
 Summary:	Libraries provided by gperftools
-Provides:	google-perftools-libs = %{version}-%{release}
+Provides:	%{libname} = %{version}-%{release}
 Obsoletes:	google-perftools-libs < 2.0
 
 %description -n %{libname}
