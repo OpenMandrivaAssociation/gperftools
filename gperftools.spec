@@ -19,7 +19,7 @@ Source0:	http://gperftools.googlecode.com/files/%{name}-%{version}.tar.gz
 # http://code.google.com/p/gperftools/issues/detail?id=444
 Patch0:		gperftools-2.0-glibc216.patch
 # ppc64 still broken, bz 238390
-ExclusiveArch:	%{ix86} x86_64 ppc %{arm}
+ExclusiveArch:	%{ix86} x86_64 ppc %{arm} aarch64
 %ifnarch ppc ppc64
 BuildRequires:	libunwind-devel
 %endif
@@ -114,6 +114,7 @@ sed -i 's/\r//' README_windows.txt
 chmod -x src/sampler.h src/sampler.cc
 
 %build
+autoreconf -fiv
 CXXFLAGS=`echo $RPM_OPT_FLAGS -DTCMALLOC_LARGE_PAGES| sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
 %configure2_5x --disable-static
 
