@@ -10,14 +10,12 @@
 
 Summary:	Very fast malloc and performance analysis tools
 Name:		gperftools
-Version:	2.0
-Release:	9
+Version:	2.3.90
+Release:	1
 License:	BSD
 Group:		Development/Other
 Url:		http://code.google.com/p/gperftools/
 Source0:	http://gperftools.googlecode.com/files/%{name}-%{version}.tar.gz
-# http://code.google.com/p/gperftools/issues/detail?id=444
-Patch0:		gperftools-2.0-glibc216.patch
 # ppc64 still broken, bz 238390
 ExclusiveArch:	%{ix86} x86_64 ppc %{arm} aarch64
 %ifnarch ppc ppc64
@@ -114,9 +112,8 @@ sed -i 's/\r//' README_windows.txt
 chmod -x src/sampler.h src/sampler.cc
 
 %build
-autoreconf -fiv
 CXXFLAGS=`echo $RPM_OPT_FLAGS -DTCMALLOC_LARGE_PAGES| sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
-%configure2_5x --disable-static
+%configure
 
 # Bad rpath!
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
