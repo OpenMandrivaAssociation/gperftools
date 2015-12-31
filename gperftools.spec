@@ -8,19 +8,19 @@
 %define	libtcmalloc			%mklibname tcmalloc %{maj4}
 %define devname				%mklibname %{name} -d
 
+%define _disable_rebuild_configure 1
+%define _disable_lto 1
+
 Summary:	Very fast malloc and performance analysis tools
 Name:		gperftools
-Version:	2.3.90
-Release:	3
+Version:	2.4
+Release:	1
 License:	BSD
 Group:		Development/Other
 Url:		http://code.google.com/p/gperftools/
 Source0:	http://gperftools.googlecode.com/files/%{name}-%{version}.tar.gz
 # ppc64 still broken, bz 238390
 ExclusiveArch:	%{ix86} x86_64 ppc %{arm} aarch64
-%ifnarch ppc ppc64
-BuildRequires:	libunwind-devel
-%endif
 
 %description
 Perf Tools is a collection of performance analysis tools, including a
@@ -113,7 +113,7 @@ chmod -x src/sampler.h src/sampler.cc
 
 %build
 CXXFLAGS=`echo $RPM_OPT_FLAGS -DTCMALLOC_LARGE_PAGES| sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
-%configure
+%configure --enable-frame-pointers
 
 # Bad rpath!
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool

@@ -1,4 +1,5 @@
 removed_sources:
   gperftools-2.0.tar.gz: da7181a7ba9b5ee7302daf6c16e886c179fe8d1b
-sources:
   gperftools-2.3.90.tar.gz: 6325d494c07c9d66bb14d184437b479773c55692
+sources:
+  gperftools-2.4.tar.gz: 13b904d0d1f220e43e4495f3403ee280c6da26ea
