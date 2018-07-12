@@ -13,14 +13,12 @@
 
 Summary:	Very fast malloc and performance analysis tools
 Name:		gperftools
-Version:	2.4
-Release:	2
+Version:	2.7
+Release:	1
 License:	BSD
 Group:		Development/Other
-Url:		http://code.google.com/p/gperftools/
-Source0:	http://gperftools.googlecode.com/files/%{name}-%{version}.tar.gz
-# ppc64 still broken, bz 238390
-ExclusiveArch:	%{ix86} x86_64 ppc %{arm} aarch64
+Url:		https://github.com/gperftools/gperftools
+Source0:	https://github.com/gperftools/gperftools/archive/gperftools-%{version}.tar.gz
 
 %description
 Perf Tools is a collection of performance analysis tools, including a
@@ -102,14 +100,15 @@ Provides:	google-perftools = %{version}-%{release}
 Pprof is a heap and CPU profiler tool, part of the gperftools suite.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1 -n %{name}-%{name}-%{version}
 
 # Fix end-of-line encoding
 sed -i 's/\r//' README_windows.txt
 
 # No need to have exec permissions on source code
-chmod -x src/sampler.h src/sampler.cc
+chmod -x src/sampler.h src/sampler.cc Makefile.am
+
+[ -e configure ] || ./autogen.sh
 
 %build
 CXXFLAGS=`echo $RPM_OPT_FLAGS -DTCMALLOC_LARGE_PAGES| sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
@@ -132,10 +131,8 @@ rm -rf %{buildroot}%{_docdir}/%{name}-%{version}/INSTALL
 
 %check
 # http://code.google.com/p/google-perftools/issues/detail?id=153
-%ifnarch ppc
 # Their test suite is junk. Disabling.
 # LD_LIBRARY_PATH=./.libs make check
-%endif
 
 %files -n pprof
 %{_bindir}/pprof
@@ -165,4 +162,3 @@ rm -rf %{buildroot}%{_docdir}/%{name}-%{version}/INSTALL
 %{_includedir}/gperftools/
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
-
