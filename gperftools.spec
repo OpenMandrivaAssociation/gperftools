@@ -14,7 +14,7 @@
 Summary:	Very fast malloc and performance analysis tools
 Name:		gperftools
 Version:	2.7
-Release:	2
+Release:	3
 License:	BSD
 Group:		Development/Other
 Url:		https://github.com/gperftools/gperftools
