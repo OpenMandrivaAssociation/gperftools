@@ -1,11 +1,17 @@
 %define major	0
 %define maj4	4
-%define	libprofiler			%mklibname profiler %{major}
-%define	libtcmalloc_minimal		%mklibname tcmalloc_minimal %{maj4}
-%define	libtcmalloc_minimal_debug	%mklibname tcmalloc_minimal_debug %{maj4}
-%define	libtcmalloc_debug		%mklibname tcmalloc_debug %{maj4}
-%define	libtcmalloc_and_profiler	%mklibname tcmalloc_and_profiler %{maj4}
-%define	libtcmalloc			%mklibname tcmalloc %{maj4}
+%define	libprofiler			%mklibname profiler
+%define	oldlibprofiler			%mklibname profiler 0
+%define	libtcmalloc_minimal		%mklibname tcmalloc_minimal
+%define	oldlibtcmalloc_minimal		%mklibname tcmalloc_minimal 4
+%define	libtcmalloc_minimal_debug	%mklibname tcmalloc_minimal_debug
+%define	oldlibtcmalloc_minimal_debug	%mklibname tcmalloc_minimal_debug 4
+%define	libtcmalloc_debug		%mklibname tcmalloc_debug
+%define	oldlibtcmalloc_debug		%mklibname tcmalloc_debug 4
+%define	libtcmalloc_and_profiler	%mklibname tcmalloc_and_profiler
+%define	oldlibtcmalloc_and_profiler	%mklibname tcmalloc_and_profiler 4
+%define	libtcmalloc			%mklibname tcmalloc
+%define	oldlibtcmalloc			%mklibname tcmalloc 4
 %define devname				%mklibname %{name} -d
 
 %define _disable_rebuild_configure 1
@@ -13,12 +19,12 @@
 
 Summary:	Very fast malloc and performance analysis tools
 Name:		gperftools
-Version:	2.7
-Release:	4
+Version:	2.15
+Release:	1
 License:	BSD
 Group:		Development/Other
-Url:		https://github.com/gperftools/gperftools
-Source0:	https://github.com/gperftools/gperftools/archive/gperftools-%{version}.tar.gz
+Url:		  https://github.com/gperftools/gperftools
+Source0:	https://github.com/gperftools/gperftools/archive/gperftools-gperftools-%{version}.tar.gz
 
 %description
 Perf Tools is a collection of performance analysis tools, including a
@@ -30,6 +36,7 @@ a heap profiler, and a cpu-profiler.
 Group:		System/Libraries
 Summary:	Libraries provided by gperftools
 Obsoletes:	%{_lib}gperftools1 < 2.0-2
+%rename %{oldlibprofiler}
 
 %description -n %{libprofiler}
 This package contains a shared library for %{name}.
@@ -38,6 +45,7 @@ This package contains a shared library for %{name}.
 Group:		System/Libraries
 Summary:	Libraries provided by gperftools
 Obsoletes:	%{_lib}gperftools1 < 2.0-2
+%rename %{oldlibtcmalloc_minimal}
 
 %description -n %{libtcmalloc_minimal}
 This package contains a shared library for %{name}.
@@ -46,6 +54,7 @@ This package contains a shared library for %{name}.
 Group:		System/Libraries
 Summary:	Libraries provided by gperftools
 Obsoletes:	%{_lib}gperftools1 < 2.0-2
+%rename %{oldlibtcmalloc_minimal_debug}
 
 %description -n %{libtcmalloc_minimal_debug}
 This package contains a shared library for %{name}.
@@ -54,6 +63,7 @@ This package contains a shared library for %{name}.
 Group:		System/Libraries
 Summary:	Libraries provided by gperftools
 Obsoletes:	%{_lib}gperftools1 < 2.0-2
+%rename %{oldlibtcmalloc_debug}
 
 %description -n %{libtcmalloc_debug}
 This package contains a shared library for %{name}.
@@ -62,6 +72,7 @@ This package contains a shared library for %{name}.
 Group:		System/Libraries
 Summary:	Libraries provided by gperftools
 Obsoletes:	%{_lib}gperftools1 < 2.0-2
+%rename %{oldlibtcmalloc_and_profiler}
 
 %description -n %{libtcmalloc_and_profiler}
 This package contains a shared library for %{name}.
@@ -70,6 +81,7 @@ This package contains a shared library for %{name}.
 Group:		System/Libraries
 Summary:	Libraries provided by gperftools
 Obsoletes:	%{_lib}gperftools1 < 2.0-2
+%rename %{oldlibtcmalloc}
 
 %description -n %{libtcmalloc}
 This package contains a shared library for %{name}.
@@ -118,10 +130,10 @@ CXXFLAGS=`echo $RPM_OPT_FLAGS -DTCMALLOC_LARGE_PAGES| sed -e 's/-Wp,-D_FORTIFY_S
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 # Can't build with smp_mflags
-make
+%make_build
 
 %install
-%makeinstall_std docdir=%{_docdir}/%{name}-%{version}/ 
+%make_install docdir=%{_docdir}/%{name}-%{version}/ 
 
 # Zero files
 rm -rf %{buildroot}%{_docdir}/%{name}-%{version}/NEWS
@@ -136,6 +148,7 @@ rm -rf %{buildroot}%{_docdir}/%{name}-%{version}/INSTALL
 
 %files -n pprof
 %{_bindir}/pprof
+%{_bindir}/pprof-symbolize
 %{_mandir}/man1/*
 
 %files -n %{libprofiler}
