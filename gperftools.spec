@@ -120,7 +120,7 @@ sed -i 's/\r//' README_windows.txt
 # No need to have exec permissions on source code
 chmod -x src/sampler.h src/sampler.cc Makefile.am
 
-[ -e configure ] || ./autogen.sh
+#[ -e configure ] || ./autogen.sh
 
 %build
 CXXFLAGS=`echo $RPM_OPT_FLAGS -DTCMALLOC_LARGE_PAGES| sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
