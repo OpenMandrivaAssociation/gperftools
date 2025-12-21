@@ -26,6 +26,11 @@ Group:		Development/Other
 Url:		  https://github.com/gperftools/gperftools
 Source0:	https://github.com/gperftools/gperftools/archive/gperftools-gperftools-%{version}.tar.gz
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 %description
 Perf Tools is a collection of performance analysis tools, including a
 high-performance multi-threaded malloc() implementation that works
