@@ -19,7 +19,7 @@
 
 Summary:	Very fast malloc and performance analysis tools
 Name:		gperftools
-Version:	2.16
+Version:	2.18.1
 Release:	1
 License:	BSD
 Group:		Development/Other
@@ -117,7 +117,7 @@ Provides:	google-perftools = %{version}-%{release}
 Pprof is a heap and CPU profiler tool, part of the gperftools suite.
 
 %prep
-%autosetup -p1 -n %{name}-%{name}-%{version}
+%autosetup -p1 -n gperftools-gperftools-2.18.1
 
 # Fix end-of-line encoding
 sed -i 's/\r//' README_windows.txt
